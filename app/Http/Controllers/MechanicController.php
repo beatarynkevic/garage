@@ -88,8 +88,8 @@ class MechanicController extends Controller
      */
     public function destroy(Mechanic $mechanic)
     {
-        if($mechanic->mechanicTrucks->count()){
-            return 'Trinti negalima, nes turi sunkvežimių';
+        if($mechanic->mechanicTrucks->count() !== 0){
+            return redirect()->back()->with('info_message', 'Trinti negalima, nes turi sunkvežimių');
         }
         $mechanic->delete();
         return redirect()->route('mechanic.index')->with('success_message', 'Sekmingai ištrintas.');
