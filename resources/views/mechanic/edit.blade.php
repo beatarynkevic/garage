@@ -9,8 +9,16 @@
 
                 <div class="card-body">
                     <form method="POST" action="{{route('mechanic.update',[$mechanic->id])}}">
-                        Name: <input type="text" name="mechanic_name" value="{{$mechanic->name}}">
-                        Surname: <input type="text" name="mechanic_surname" value="{{$mechanic->surname}}">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" name="mechanic_name" value="{{$mechanic->name}}">
+                            <small class=" form-text text-muted">Please enter your name</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Surname</label>
+                            <input type="text" class="form-control" name="mechanic_surname" value="{{$mechanic->surname}}">
+                            <small class="form-text text-muted">Please enter your surname</small>
+                        </div>
                         @csrf
                         <button type="submit" class="btn btn-info">EDIT</button>
                     </form>

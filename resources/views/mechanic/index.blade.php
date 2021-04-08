@@ -8,7 +8,7 @@
                 <div class="card-header">List of mechanics</div>
 
                 <div class="card-body">
-                    <ul class="list group">
+                    <ul class="list-group">
                         @foreach ($mechanics as $mechanic)
                         <li class="list-group-item list-line">
                             <div>
@@ -20,10 +20,9 @@
                                     @csrf
                                     <button type="submit" class="btn btn-danger">DELETE</button>
                                 </form>
-                                <br>
                             </div>
-                            @endforeach
                         </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

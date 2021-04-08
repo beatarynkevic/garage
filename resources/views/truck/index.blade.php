@@ -8,14 +8,28 @@
                 <div class="card-header">List of trucks</div>
 
                 <div class="card-body">
-                    @foreach ($trucks as $truck)
-                    {{$truck->maker}} {{$truck->truckMechanic->name}} {{$truck->truckMechanic->surname}} <a href="{{route('truck.edit',[$truck])}}">EDIT</a>
-                    <form method="POST" action="{{route('truck.destroy', [$truck])}}">
-                        @csrf
-                        <button type="submit">DELETE</button>
-                    </form>
-                    <br>
-                    @endforeach
+                    <ul class="list group">
+                        @foreach ($trucks as $truck)
+                        <li class="list-group-item list-line">
+                            <div class="list-line__trucks">
+                                <div class="list-line__trucks__maker">
+                                    {{$truck->maker}}
+                                </div>
+                                <div class="list-line__trucks__mechanic">
+                                    {{$truck->truckMechanic->name}} {{$truck->truckMechanic->surname}}
+                                </div>
+                            </div>
+                            <div class="list-line__buttons">
+                                <a href="{{route('truck.pdf', [$truck])}}" class="btn btn-warning">PDF</a>
+                                <a href="{{route('truck.edit',[$truck])}}" class="btn btn-info">EDIT</a>
+                                <form method="POST" action="{{route('truck.destroy', [$truck])}}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                </form>
+                            </div>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
