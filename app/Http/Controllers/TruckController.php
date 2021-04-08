@@ -10,6 +10,10 @@ use Validator;
 
 class TruckController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,10 +23,15 @@ class TruckController extends Controller
     {
         
         $mechanics = Mechanic::all();
+        $pvz = Truck::all();
 
         if($request->mechanic_id) {
             $trucks = Truck::where('mechanic_id', $request->mechanic_id)->get();
             $filterBy = $request->mechanic_id;
+        }
+        elseif($request->maker) {
+            $trucks = Truck::where('maker', $request->maker)->get();
+            $filterByMaker = $request->maker;
         }
         else {
             $trucks = Truck::all();
@@ -42,6 +51,8 @@ class TruckController extends Controller
             'trucks' => $trucks,
             'mechanics' => $mechanics,
             'filterBy' => $filterBy ?? 0,
+            'pvz' => $pvz ?? 0,
+            'filterByMaker' => $filterByMaker ?? 0,
             'sortBy' => $sortBy ?? 0
             ]);
     }

@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <h2>trucks List</h2>
@@ -10,7 +10,7 @@
                     <div class="make-inline">
                         <form action="{{route('truck.index')}}" method="get" class="make-inline">
                             <div class="form-group make-inline">
-                                <label>mechanic: </label>
+                                <label>Filter by:</label>
                                 <select class="form-control" name="mechanic_id">
                                     <option value="0" disabled @if($filterBy==0) selected @endif>Select mechanic</option>
                                     @foreach ($mechanics as $mechanic)
@@ -33,6 +33,25 @@
                             <button type="submit" class="btn btn-info ">Filter</button>
                         </form>
                         <a href="{{route('truck.index')}}" class="btn btn-info">Clear filter</a>
+                    </div>
+
+                    <div class="make-inline" style="padding-top:20px;">
+                        <form action="{{route('truck.index')}}" method="get" class="make-inline">
+                            <div class="form-group make-inline">
+                                <label>Filter by: </label>
+                                <select class="form-control" name="maker">
+                                    <option value="0" disabled @if($filterByMaker==0) selected @endif>Select truck maker</option>
+
+                                    @foreach ($pvz as $truck)
+                                    <option value="{{$truck->maker}}" @if($filterByMaker==$truck->maker) selected @endif>
+                                        {{$truck->maker}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label>Sort by type:</label>
+                            <button type="submit" class="btn btn-info ">Filter</button>
+                        </form>
                     </div>
                 </div>
                 <div class="card-body">
