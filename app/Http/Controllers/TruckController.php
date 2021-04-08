@@ -6,6 +6,7 @@ use App\Models\Truck;
 use Illuminate\Http\Request;
 use App\Models\Mechanic;
 use PDF;
+use Validator;
 
 class TruckController extends Controller
 {
@@ -40,6 +41,26 @@ class TruckController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'truck_maker' => ['required', 'min:3', 'max:64', 'alpha'],
+            'truck_plate' => ['required', 'min:3', 'max:64', 'alpha_dash'],
+            'truck_make_year' => ['required', 'size:4'],
+        ],
+        //  [
+        //  'mechanic_name.min' => 'per trumpas vardas',
+        //  'mechanic_surname.min' => 'per trumpas pavarde',
+        //  'mechanic_name.required' => 'visi laukai turi buti uzpildyti',
+        //  'mechanic_surname.required' => 'visi laukai turi buti uzpildyti',
+        //  'mechanic_name.alpha' => 'naudokite tik raides',
+        //  'mechanic_surname.alpha' => 'naudokite tik raides'
+        //  ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $truck = new Truck;
         $truck->maker = $request->truck_maker;
         $truck->plate = $request->truck_plate;
@@ -83,6 +104,26 @@ class TruckController extends Controller
      */
     public function update(Request $request, Truck $truck)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'truck_maker' => ['required', 'min:3', 'max:64', 'alpha'],
+            'truck_plate' => ['required', 'min:3', 'max:64', 'alpha_dash'],
+            'truck_make_year' => ['required', 'size:4'],
+        ],
+        //  [
+        //  'mechanic_name.min' => 'per trumpas vardas',
+        //  'mechanic_surname.min' => 'per trumpas pavarde',
+        //  'mechanic_name.required' => 'visi laukai turi buti uzpildyti',
+        //  'mechanic_surname.required' => 'visi laukai turi buti uzpildyti',
+        //  'mechanic_name.alpha' => 'naudokite tik raides',
+        //  'mechanic_surname.alpha' => 'naudokite tik raides'
+        //  ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
        $truck->maker = $request->truck_maker;
         $truck->plate = $request->truck_plate;
         $truck->make_year = $request->truck_make_year;

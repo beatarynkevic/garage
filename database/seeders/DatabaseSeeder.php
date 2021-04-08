@@ -35,9 +35,9 @@ class DatabaseSeeder extends Seeder
         $trucks = 10;
         foreach(range(1,$trucks) as $_) {
         DB::table('trucks')->insert([
-            'maker' => str_replace(['.', '"', "'", ';', '(', ')'], '', $faker->realText(rand(10,45))),
+            'maker' => str_replace(['.', '"', "'", ';', '(', ')'], '', $faker->realText(rand(10,30))),
             'plate' => $faker->buildingNumber(),
-            'make_year' => rand(22, 555),
+            'make_year' => rand(1998, 2021),
             'mechanic_notices' => $faker->realText(400, 4),
             'mechanic_id' => rand(1, $mechanics)
         ]);

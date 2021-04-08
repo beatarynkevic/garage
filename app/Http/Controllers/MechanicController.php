@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mechanic;
 use Illuminate\Http\Request;
+use Validator;
 
 class MechanicController extends Controller
 {
@@ -36,6 +37,25 @@ class MechanicController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),
+       [
+           'mechanic_name' => ['required', 'min:3', 'max:64', 'alpha'],
+           'mechanic_surname' => ['required', 'min:3', 'max:64', 'alpha'],
+       ],
+        [
+        'mechanic_name.min' => 'per trumpas vardas',
+        'mechanic_surname.min' => 'per trumpas pavarde',
+        'mechanic_name.required' => 'visi laukai turi buti uzpildyti',
+        'mechanic_surname.required' => 'visi laukai turi buti uzpildyti',
+        'mechanic_name.alpha' => 'naudokite tik raides',
+        'mechanic_surname.alpha' => 'naudokite tik raides'
+        ]
+       );
+       if ($validator->fails()) {
+           $request->flash();
+           return redirect()->back()->withErrors($validator);
+       }
+
         $mechanic = new Mechanic;
         $mechanic->name = $request->mechanic_name;
         $mechanic->surname = $request->mechanic_surname;
@@ -74,6 +94,26 @@ class MechanicController extends Controller
      */
     public function update(Request $request, Mechanic $mechanic)
     {
+
+        $validator = Validator::make($request->all(),
+        [
+            'mechanic_name' => ['required', 'min:3', 'max:64', 'alpha'],
+            'mechanic_surname' => ['required', 'min:3', 'max:64', 'alpha'],
+        ],
+         [
+         'mechanic_name.min' => 'per trumpas vardas',
+         'mechanic_surname.min' => 'per trumpas pavarde',
+         'mechanic_name.required' => 'visi laukai turi buti uzpildyti',
+         'mechanic_surname.required' => 'visi laukai turi buti uzpildyti',
+         'mechanic_name.alpha' => 'naudokite tik raides',
+         'mechanic_surname.alpha' => 'naudokite tik raides'
+         ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
+
         $mechanic->name = $request->mechanic_name;
        $mechanic->surname = $request->mechanic_surname;
        $mechanic->save();
