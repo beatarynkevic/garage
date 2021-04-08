@@ -15,10 +15,35 @@ class TruckController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $trucks = Truck::all();
-       return view('truck.index', ['trucks' => $trucks]);
+        
+        $mechanics = Mechanic::all();
+
+        if($request->mechanic_id) {
+            $trucks = Truck::where('mechanic_id', $request->mechanic_id)->get();
+            $filterBy = $request->mechanic_id;
+        }
+        else {
+            $trucks = Truck::all();
+        }
+    
+        //RUSIAVIMAS(KOLEKCIJA)
+        if($request->sort && 'asc' == $request->sort){
+            $trucks= $trucks->sortBy('maker');
+            $sortBy = 'asc';
+        }
+        elseif ($request->sort && 'desc' == $request->sort) {
+            $trucks = $trucks->sortByDesc('maker');
+            $sortBy = 'desc';
+        }
+
+        return view('truck.index', [
+            'trucks' => $trucks,
+            'mechanics' => $mechanics,
+            'filterBy' => $filterBy ?? 0,
+            'sortBy' => $sortBy ?? 0
+            ]);
     }
 
     /**

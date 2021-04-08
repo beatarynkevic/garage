@@ -1,13 +1,42 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">List of trucks</div>
+                <div class="card-header">
+                    <h2>trucks List</h2>
 
+                    <div class="make-inline">
+                        <form action="{{route('truck.index')}}" method="get" class="make-inline">
+                            <div class="form-group make-inline">
+                                <label>mechanic: </label>
+                                <select class="form-control" name="mechanic_id">
+                                    <option value="0" disabled @if($filterBy==0) selected @endif>Select mechanic</option>
+                                    @foreach ($mechanics as $mechanic)
+                                    <option value="{{$mechanic->id}}" @if($filterBy==$mechanic->id) selected @endif>
+                                        {{$mechanic->name}} {{$mechanic->surname}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label>Sort by type:</label>
+                            <div class="form-group form-check make-inline">
+                                <input type="radio" name="sort" value="asc" class="form-check-input" id="sortASC" @if($sortBy=='asc' ) checked @endif>
+                                <label class="form-check-label" for="sortASC">ASC</label>
+                                <div class="form-group form-check make-inline">
+                                    <input type="radio" name="sort" value="desc" class="form-check-input" id="sortDESC" @if($sortBy=='desc' ) checked @endif>
+                                </div>
+                                <label class="form-check-label" for="sortDESC">DESC</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-info ">Filter</button>
+                        </form>
+                        <a href="{{route('truck.index')}}" class="btn btn-info">Clear filter</a>
+                    </div>
+                </div>
                 <div class="card-body">
+
                     <ul class="list group">
                         @foreach ($trucks as $truck)
                         <li class="list-group-item list-line">
@@ -31,6 +60,7 @@
                         @endforeach
                     </ul>
                 </div>
+
             </div>
         </div>
     </div>
